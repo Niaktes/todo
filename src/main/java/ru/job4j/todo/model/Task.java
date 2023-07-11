@@ -1,9 +1,10 @@
 package ru.job4j.todo.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "tasks")
@@ -12,7 +13,7 @@ import lombok.EqualsAndHashCode;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
 
@@ -21,8 +22,9 @@ public class Task {
 
     private String description;
 
-    private LocalDateTime created;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate created = LocalDate.now();
 
-    private boolean done;
+    private boolean done = false;
 
 }

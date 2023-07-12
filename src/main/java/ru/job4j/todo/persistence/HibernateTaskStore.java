@@ -12,7 +12,7 @@ import ru.job4j.todo.model.Task;
 @Repository
 @Slf4j
 @AllArgsConstructor
-public class TaskStoreHibernate implements TaskStore {
+public class HibernateTaskStore implements TaskStore {
 
     private final SessionFactory sf;
 

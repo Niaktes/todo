@@ -19,10 +19,15 @@
       <div class="container">
         <a class="navbar-brand text-secondary" href="/">ToDo List</a>
         <div class="collapse navbar-collapse">
-          <div class="navbar-nav me-auto">
-            <a class="nav-link text-primary" href="/">Все</a>
-            <a class="nav-link text-secondary" href="#">Выполненные</a>
-            <a class="nav-link text-secondary" href="#">Новые</a>
+          <div class="dropdown">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              Выбрать задачи:
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" th:href="@{/tasks/all}">Все</a></li>
+              <li><a class="dropdown-item" th:href="@{/tasks/done}">Выполненные</a></li>
+              <li><a class="dropdown-item" th:href="@{/tasks/new}">Новые</a></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -39,7 +44,7 @@
           </thead>
           <tbody>
           <tr th:each="task : ${tasks}">
-            <td><a th:text="${task.name}" th:href="@{tasks/{taskId}(taskId=${task.id})}"/></td>
+            <td><a th:text="${task.name}" th:href="@{/tasks/{taskId}(taskId=${task.id})}"/></td>
             <td th:text="${task.created}" />
             <td>
               <span th:if="${task.done}">

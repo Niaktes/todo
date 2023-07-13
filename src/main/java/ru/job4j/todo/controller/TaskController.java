@@ -1,10 +1,13 @@
 package ru.job4j.todo.controller;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
 
 @Controller
@@ -14,9 +17,29 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("tasks", taskService.findAll());
+    @GetMapping("/all")
+    public String getAllTasks(Model model) {
+        Collection<Task> tasks = taskService.findAll();
+        model.addAttribute("tasks", tasks);
+        return "tasks/list";
+    }
+
+    @GetMapping("/done")
+    public String getDoneTasks(Model model) {
+        Collection<Task> tasks = taskService.findAll().stream()
+                .filter(Task::isDone)
+                .toList();
+        model.addAttribute("tasks", tasks);
+        return "tasks/list";
+    }
+
+    @GetMapping("/new")
+    public String getNewTasks(Model model) {
+        LocalDate afterDate = LocalDate.now().minusWeeks(1);
+        Collection<Task> tasks = taskService.findAll().stream()
+                .filter(t -> t.getCreated().isAfter(afterDate))
+                .toList();
+        model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
 

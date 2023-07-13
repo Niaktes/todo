@@ -8,7 +8,7 @@ public class IndexController {
 
     @GetMapping({"/", "/index"})
     public String getIndex() {
-        return "redirect:/tasks";
+        return "redirect:/tasks/all";
     }
 
 }

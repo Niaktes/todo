@@ -5,8 +5,8 @@ import java.util.Collection;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
 
@@ -41,6 +41,17 @@ public class TaskController {
                 .toList();
         model.addAttribute("tasks", tasks);
         return "tasks/list";
+    }
+
+    @GetMapping("/create")
+    public String getCreationPage(Model model) {
+        return "tasks/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Task task, Model model) {
+        taskService.save(task);
+        return "redirect:/tasks/all";
     }
 
 }

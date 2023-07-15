@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
 
@@ -51,6 +50,50 @@ public class TaskController {
     @PostMapping("/create")
     public String create(@ModelAttribute Task task, Model model) {
         taskService.save(task);
+        return "redirect:/tasks/all";
+    }
+
+    @GetMapping("/{id}")
+    public String getById(Model model, @PathVariable int id) {
+        model.addAttribute("task", taskService.findById(id));
+        return "tasks/one";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable int id) {
+        boolean isDeleted = taskService.delete(id);
+        if (!isDeleted) {
+            model.addAttribute("message", "Ошибка при удалении задачи");
+            return "errors/404";
+        }
+        return "redirect:/tasks/all";
+    }
+
+    @PostMapping("/getDone")
+    public String getDone(@ModelAttribute Task task, Model model) {
+        task.setDone(true);
+        boolean isUpdated = taskService.update(task);
+        if (!isUpdated) {
+            model.addAttribute("message", "Ошибка при обновлении задачи");
+            return "errors/404";
+        }
+        model.addAttribute("task", task);
+        return "redirect:/tasks/all";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String getUpdateById(Model model, @PathVariable int id) {
+        model.addAttribute("task", taskService.findById(id));
+        return "tasks/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editTask(@ModelAttribute Task task, Model model) {
+        boolean isUpdated = taskService.update(task);
+        if (!isUpdated) {
+            model.addAttribute("message", "Ошибка при обновлении задачи");
+            return "errors/404";
+        }
         return "redirect:/tasks/all";
     }
 

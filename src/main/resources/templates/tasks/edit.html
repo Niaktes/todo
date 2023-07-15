@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+  <!-- Зависимость Bootstrap-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device=width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+  <title>Редактирование задачи</title>
+</head>
+
+<body>
+  <div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-grey">
+      <div class="container">
+        <a class="navbar-brand text-secondary" href="/">ToDo List</a>
+        <div class="collapse navbar-collapse">
+          <div class="dropdown">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              Выбрать задачи:
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" th:href="@{/tasks/all}">Все</a></li>
+              <li><a class="dropdown-item" th:href="@{/tasks/done}">Выполненные</a></li>
+              <li><a class="dropdown-item" th:href="@{/tasks/new}">Новые</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <form class="mt-3" th:action="@{/tasks/edit}" method="post" th:object="${task}">
+        <input type="hidden" name="id" th:field="*{id}">
+        <div class="mb-3">
+          <label for="name" class="form-label"><b>Название</b></label>
+          <textarea class="form-control" id="name" name="name" th:field="*{name}" placeholder="Название задачи"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label"><b>Описание</b></label>
+          <textarea class="form-control" id="description" name="description" th:field="*{description}" placeholder="Описание задачи"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="created">Создана:</label>
+          <input type="date" id="created" name="created" th:field="*{created}">
+        </div>
+        <div class="mb-3">
+          <input type="checkbox" id="done" name="done" th:field="*{done}">
+          <label for="done"> Выполнено</label><br>
+        </div>
+        <div class="row">
+          <button class="btn btn-success w-50" type="submit">Отредактировать</button>
+          <input type="reset" class="btn btn-danger w-50" value="Сбросить изменения">
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

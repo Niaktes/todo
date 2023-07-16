@@ -2,6 +2,7 @@ package ru.job4j.todo.controller;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Comparator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,9 @@ public class TaskController {
 
     @GetMapping("/all")
     public String getAllTasks(Model model) {
-        Collection<Task> tasks = taskService.findAll();
+        Collection<Task> tasks = taskService.findAll().stream()
+                .sorted(Comparator.comparing(Task::getId))
+                .toList();
         model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
@@ -27,6 +30,7 @@ public class TaskController {
     public String getDoneTasks(Model model) {
         Collection<Task> tasks = taskService.findAll().stream()
                 .filter(Task::isDone)
+                .sorted(Comparator.comparing(Task::getId))
                 .toList();
         model.addAttribute("tasks", tasks);
         return "tasks/list";
@@ -37,6 +41,7 @@ public class TaskController {
         LocalDate afterDate = LocalDate.now().minusWeeks(1);
         Collection<Task> tasks = taskService.findAll().stream()
                 .filter(t -> t.getCreated().isAfter(afterDate))
+                .sorted(Comparator.comparing(Task::getId))
                 .toList();
         model.addAttribute("tasks", tasks);
         return "tasks/list";

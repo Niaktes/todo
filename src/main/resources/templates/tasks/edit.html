@@ -17,14 +17,16 @@
   <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-lg navbar-dark bg-grey">
       <div class="container">
-        <a class="navbar-brand text-secondary" href="/">ToDo List</a>
+        <a class="navbar-brand text-secondary" href="/"><h2>ToDo List</h2></a>
         <div class="collapse navbar-collapse">
-          <div class="dropdown">
-            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-              Выбрать задачи:
+          <div class="col-1"></div>
+          <div class="btn-group col-3">
+            <button type="button" class="btn btn-outline-secondary btn-sm w-100">Выбор задач</button>
+            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split dropstart w-10" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdown-item" th:href="@{/tasks/all}">Все</a></li>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" th:href="@{/tasks/all}">Все задачи</a></li>
               <li><a class="dropdown-item" th:href="@{/tasks/done}">Выполненные</a></li>
               <li><a class="dropdown-item" th:href="@{/tasks/new}">Новые</a></li>
             </ul>
@@ -32,28 +34,32 @@
         </div>
       </div>
     </nav>
-    <div class="container">
-      <form class="mt-3" th:action="@{/tasks/edit}" method="post" th:object="${task}">
+    <div class="container col-9">
+      <form th:action="@{/tasks/edit}" method="post" th:object="${task}">
         <input type="hidden" name="id" th:field="*{id}">
         <div class="mb-3">
-          <label for="name" class="form-label"><b>Название</b></label>
-          <textarea class="form-control" id="name" name="name" th:field="*{name}" placeholder="Название задачи"></textarea>
+          <label for="name" class="form-label fs-6"><b>Название задачи</b></label>
+          <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Название задачи"></input>
         </div>
         <div class="mb-3">
-          <label for="description" class="form-label"><b>Описание</b></label>
-          <textarea class="form-control" id="description" name="description" th:field="*{description}" placeholder="Описание задачи"></textarea>
+          <label for="description" class="form-label fs-6"><b>Описание задачи</b></label>
+          <textarea class="form-control" id="description" name="description" rows="9" th:field="*{description}" placeholder="Описание задачи"></textarea>
+        </div>
+        <div class="mb-3 col-3">
+          <label for="created" class="fs-6"><b>Создана:</b></label>
+          <input type="date" id="created" name="created" class="form-control" th:field="*{created}">
         </div>
         <div class="mb-3">
-          <label for="created">Создана:</label>
-          <input type="date" id="created" name="created" th:field="*{created}">
-        </div>
-        <div class="mb-3">
-          <input type="checkbox" id="done" name="done" th:field="*{done}">
-          <label for="done"> Выполнено</label><br>
+          <input type="checkbox" id="done" name="done" class="form-check-input" th:field="*{done}">
+          <label for="done" class="fs-6"><b> Выполнена</b></label><br>
         </div>
         <div class="row">
-          <button class="btn btn-success w-50" type="submit">Отредактировать</button>
-          <input type="reset" class="btn btn-danger w-50" value="Сбросить изменения">
+          <div class="col-6 d-grid gap-2">
+            <button class="btn btn-success w-150" type="submit">Отредактировать</button>
+          </div>
+          <div class="col-6 d-grid gap-2">
+            <input type="reset" class="btn btn-danger w-150" value="Сбросить изменения">
+          </div>
         </div>
       </form>
     </div>

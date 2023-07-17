@@ -34,31 +34,23 @@
         </div>
       </div>
     </nav>
-    <div class="container" th:object="${task}">
-      <div class="row">
-        <div class="mb-2"></div>
-        <span class="fs-4" th:text="*{name}"></span>
-        <div class="mb-2"></div>
+    <div class="container col-9" th:object="${task}">
+      <div class="row mb-1">
+        <span class="fs-5" th:text="*{name}"></span>
       </div>
-      <div class="mb-1"></div>
-      <div class="row border border-secondary rounded" style="height: 400px;">
-        <span style="white-space: pre;"  class="fs-6" th:utext="*{description}"></span>
+      <div class="mb-3 row border border-secondary rounded" style="height: 290px;">
+        <span style="white-space: pre;" class="fs-6" th:utext="*{description}"></span>
       </div>
-      <div class="mb-1"></div>
-      <div class="row">
-        <div class="mb-3"></div>
-        <span class="text-end">Создана: <span class="fw-lighter" th:text="*{created}"></span></span>
-        <div class="mb-3"></div>
+      <div class="row mb-3">
+        <span class="fs-6 text-end" th:text="*{created}"></span>
       </div>
-      <div class="mb-1"></div>
-      <div class="row">
+      <div class="row mb-2">
         <span class="text-center fs-6 text-success" th:if="*{done}"><i class="bi bi-check-circle"></i> Выполнено</span>
         <span class="text-center fs-6 text-danger" th:if="*{!done}"><i class="bi bi-circle"></i> Не выполнено</span>
       </div>
-      <div class="mb-2"></div>
       <div class="row">
         <div class="col-4 d-grid gap-2">
-          <a class="btn btn-outline-primary w-100" th:href="@{/tasks/edit/{taskId}(taskId=*{id})}">Редактировать</a>
+          <a class="btn btn-primary w-100" th:href="@{/tasks/edit/{taskId}(taskId=*{id})}">Редактировать</a>
         </div>
         <div class="col-4 d-grid gap-2">
           <form th:if="${!task.done}" th:action="@{/tasks/getDone}" method="post" th:object="${task}">
@@ -67,37 +59,16 @@
             <input type="hidden" name="description" th:field="*{description}">
             <input type="hidden" name="created" th:field="*{created}">
             <input type="hidden" name="done" th:field="*{done}">
-            <button class="btn btn-outline-success w-100" type="submit">Выполнить</button>
+            <button class="btn btn-success w-100" type="submit">Выполнить</button>
           </form>
         </div>
         <div class="col-4 d-grid gap-2">
           <form th:action="@{/tasks/delete/{taskId}(taskId=*{id})}" method="post">
-            <button class="btn btn-outline-danger w-100" type="submit">Удалить</button>
+            <button class="btn btn-danger w-100" type="submit">Удалить</button>
           </form>
         </div>
       </div>
     </div>
-
-    <!--
-          <div th:each="film: ${films}">
-            <div class="row border border-secondary rounded">
-              <div class="mb-2"></div>
-              <div class="col-3">
-                <img th:src="@{/files/{fileId}(fileId=${film.posterId})}" width="220" class="rounded mx-auto d-block">
-              </div>
-              <div class="col-9">
-                <span class="fs-4" th:text="${film.name}"></span>
-                <br><span class="fw-light" th:text="${film.description}"></span></br>
-                <span class="fw-semibold">Год выпуска: <span class="fw-lighter" th:text="${film.year}"></span></span></br>
-                <span class="fw-semibold">Жанр: <span class="fw-lighter" th:text="${film.genre}"></span></span></br>
-                <span class="fw-light" th:text="${film.minimalAge} + '+'"></span></br>
-                <span class="fw-light" th:text="${film.durationInMinutes} + ' минут'"></span>
-              </div>
-              <div class="mb-2"></div>
-            </div>
-          </div>
-          -->
-
   </div>
 </body>
 </html>

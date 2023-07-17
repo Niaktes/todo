@@ -37,20 +37,19 @@
     <div class="container col-9">
       <form th:action="@{/tasks/create}" method="post">
         <div class="mb-3">
-          <label for="name" class="form-label"><b>Название</b></label>
+          <label for="name" class="form-label fs-6"><b>Название задачи</b></label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Купить продукты">
         </div>
         <div class="mb-3">
-          <label for="description" class="form-label"><b>Описание</b></label>
-          <textarea class="form-control" id="description" name="description" rows="12" placeholder="Надо сходить в магазин"></textarea>
+          <label for="description" class="form-label fs-6"><b>Описание задачи</b></label>
+          <textarea class="form-control" id="description" name="description" rows="9" placeholder="Надо сходить в магазин"></textarea>
         </div>
-        <div class="mb-3 row">
-          <div class="col-6"></div>
-          <div class="col-6">
-            <div class="row">
-              <div class="col-6"><a class="btn btn-outline-danger w-100" th:href="@{/tasks/all}">Отмена</a></div>
-              <div class="col-6"><button class="btn btn-outline-primary w-100" type="submit">Создать</button></div>
-            </div>
+        <div class="row">
+          <div class="col-6 d-grid gap-2">
+            <button class="btn btn-primary w-150" type="submit">Создать</button>
+          </div>
+          <div class="col-6 d-grid gap-2">
+            <a class="btn btn-danger w-150" th:href="@{/tasks/all}">Отмена</a>
           </div>
         </div>
       </form>

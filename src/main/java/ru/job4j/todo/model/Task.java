@@ -25,6 +25,6 @@ public class Task {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created = LocalDate.now();
 
-    private boolean done = false;
+    private boolean done;
 
 }

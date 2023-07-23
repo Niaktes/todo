@@ -1,8 +1,8 @@
 package ru.job4j.todo.controller;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,21 +28,14 @@ public class TaskController {
 
     @GetMapping("/done")
     public String getDoneTasks(Model model) {
-        Collection<Task> tasks = taskService.findAll().stream()
-                .filter(Task::isDone)
-                .sorted(Comparator.comparing(Task::getId))
-                .toList();
+        Collection<Task> tasks = taskService.findDone();
         model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
 
     @GetMapping("/new")
     public String getNewTasks(Model model) {
-        LocalDate afterDate = LocalDate.now().minusWeeks(1);
-        Collection<Task> tasks = taskService.findAll().stream()
-                .filter(t -> t.getCreated().isAfter(afterDate))
-                .sorted(Comparator.comparing(Task::getId))
-                .toList();
+        Collection<Task> tasks = taskService.findNew();
         model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
@@ -60,7 +53,12 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
-        model.addAttribute("task", taskService.findById(id));
+        Optional<Task> taskOptional = taskService.findById(id);
+        if (taskOptional.isEmpty()) {
+            model.addAttribute("message", "Задача с указанным Id не найдена.");
+            return "errors/404";
+        }
+        model.addAttribute("task", taskOptional.get());
         return "tasks/one";
     }
 
@@ -74,21 +72,24 @@ public class TaskController {
         return "redirect:/tasks/all";
     }
 
-    @PostMapping("/getDone")
-    public String getDone(@ModelAttribute Task task, Model model) {
-        task.setDone(true);
-        boolean isUpdated = taskService.update(task);
+    @PostMapping("/getDone/{id}")
+    public String getDone(Model model, @PathVariable int id) {
+        boolean isUpdated = taskService.getDone(id);
         if (!isUpdated) {
             model.addAttribute("message", "Ошибка при обновлении задачи");
             return "errors/404";
         }
-        model.addAttribute("task", task);
         return "redirect:/tasks/all";
     }
 
     @GetMapping("/edit/{id}")
     public String getUpdateById(Model model, @PathVariable int id) {
-        model.addAttribute("task", taskService.findById(id));
+        Optional<Task> taskOptional = taskService.findById(id);
+        if (taskOptional.isEmpty()) {
+            model.addAttribute("message", "Задача с указанным Id не найдена.");
+            return "errors/404";
+        }
+        model.addAttribute("task", taskOptional.get());
         return "tasks/edit";
     }
 

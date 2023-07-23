@@ -1,6 +1,7 @@
 package ru.job4j.todo.service;
 
 import java.util.Collection;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Task;
@@ -18,7 +19,7 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public Task findById(int id) {
+    public Optional<Task> findById(int id) {
         return taskStore.findById(id);
     }
 
@@ -28,8 +29,23 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
+    public Collection<Task> findDone() {
+        return taskStore.findDone();
+    }
+
+    @Override
+    public Collection<Task> findNew() {
+        return taskStore.findNew();
+    }
+
+    @Override
     public boolean update(Task task) {
         return taskStore.update(task);
+    }
+
+    @Override
+    public boolean getDone(int id) {
+        return taskStore.getDone(id);
     }
 
     @Override

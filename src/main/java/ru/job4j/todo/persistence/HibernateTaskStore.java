@@ -1,5 +1,6 @@
 package ru.job4j.todo.persistence;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -83,10 +84,12 @@ public class HibernateTaskStore implements TaskStore {
     @Override
     public Collection<Task> findNew() {
         Session session = sf.openSession();
+        LocalDate afterDate = LocalDate.now().minusWeeks(1);
         Collection<Task> result = null;
         try (session) {
             session.beginTransaction();
-            result = session.createQuery("FROM Task WHERE created > (current_date - 7)", Task.class)
+            result = session.createQuery("FROM Task WHERE created > :afterDate", Task.class)
+                    .setParameter("afterDate", afterDate)
                     .list();
             session.getTransaction().commit();
         } catch (HibernateException e) {

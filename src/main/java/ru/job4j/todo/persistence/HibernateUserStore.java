@@ -27,7 +27,7 @@ public class HibernateUserStore implements UserStore {
             result = Optional.of(user);
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
            session.close();
         }
@@ -48,7 +48,7 @@ public class HibernateUserStore implements UserStore {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }

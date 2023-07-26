@@ -27,7 +27,7 @@ public class HibernateTaskStore implements TaskStore {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }
@@ -46,7 +46,7 @@ public class HibernateTaskStore implements TaskStore {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }
@@ -64,7 +64,7 @@ public class HibernateTaskStore implements TaskStore {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }
@@ -82,7 +82,7 @@ public class HibernateTaskStore implements TaskStore {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }
@@ -102,7 +102,7 @@ public class HibernateTaskStore implements TaskStore {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }
@@ -120,7 +120,7 @@ public class HibernateTaskStore implements TaskStore {
             result = true;
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }
@@ -140,7 +140,7 @@ public class HibernateTaskStore implements TaskStore {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }
@@ -160,7 +160,7 @@ public class HibernateTaskStore implements TaskStore {
             result = lines > 0;
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             session.close();
         }

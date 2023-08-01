@@ -1,58 +1,46 @@
 package ru.job4j.todo.persistence;
 
+import java.util.Map;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.User;
 
 @Repository
-@Slf4j
 @AllArgsConstructor
 public class HibernateUserStore implements UserStore {
 
     private final SessionFactory sf;
+    private final CrudStore crudStore;
 
+    /**
+     * Сохранить пользователя в базе данных.
+     * @param user пользователь.
+     * @return пользователь с ID.
+     */
     @Override
     public Optional<User> save(User user) {
-        Session session = sf.openSession();
         Optional<User> result = Optional.empty();
-        try {
-            session.beginTransaction();
-            session.save(user);
-            session.getTransaction().commit();
+        if (crudStore.run(session -> session.save(user))) {
             result = Optional.of(user);
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            log.error(e.getMessage(), e);
-        } finally {
-           session.close();
         }
         return result;
     }
 
+    /**
+     * Получить пользователя по логину и паролю.
+     * @param login логин пользователя.
+     * @param password пароль пользователя.
+     * @return Optional пользователя.
+     */
     @Override
     public Optional<User> findByLoginAndPassword(String login, String password) {
-        Session session = sf.openSession();
-        Optional<User> result = Optional.empty();
-        try {
-            session.beginTransaction();
-            result = session.createQuery("FROM User WHERE login = :uLogin AND password = :uPassword",
-                            User.class)
-                    .setParameter("uLogin", login)
-                    .setParameter("uPassword", password)
-                    .uniqueResultOptional();
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            log.error(e.getMessage(), e);
-        } finally {
-            session.close();
-        }
-        return result;
+        return crudStore.optional(
+                "FROM User WHERE login = :uLogin AND password = :uPassword",
+                User.class,
+                Map.of("uLogin", login, "uPassword", password)
+        );
     }
 
 }

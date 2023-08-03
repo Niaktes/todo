@@ -3,7 +3,6 @@ package ru.job4j.todo.persistence;
 import java.util.Map;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.User;
 
@@ -11,7 +10,6 @@ import ru.job4j.todo.model.User;
 @AllArgsConstructor
 public class HibernateUserStore implements UserStore {
 
-    private final SessionFactory sf;
     private final CrudStore crudStore;
 
     /**

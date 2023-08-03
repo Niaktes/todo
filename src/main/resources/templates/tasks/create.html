@@ -15,7 +15,7 @@
 
 <body>
   <div class="container-fluid p-0">
-    <header th:insert="blocks/header :: header_main"></header>
+    <header th:insert="~{blocks/header :: header_main}"></header>
     <div class="container col-9">
       <form th:action="@{/tasks/create}" method="post">
         <div class="mb-3">
@@ -35,7 +35,7 @@
           </div>
         </div>
       </form>
-      <footer th:insert="blocks/footer :: footer"></footer>
+      <footer th:insert="~{blocks/footer :: footer}"></footer>
     </div>
   </div>
 </body>

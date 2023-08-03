@@ -22,6 +22,10 @@ public class Task {
 
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created = LocalDate.now();
 

@@ -5,6 +5,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.persistence.TaskStore;
 
 @Service
@@ -14,7 +15,8 @@ public class SimpleTaskService implements TaskService {
     private final TaskStore taskStore;
 
     @Override
-    public Task save(Task task) {
+    public Task save(Task task, User user) {
+        task.setUser(user);
         return taskStore.save(task);
     }
 
@@ -40,6 +42,13 @@ public class SimpleTaskService implements TaskService {
 
     @Override
     public boolean update(Task task) {
+        if (task.getUser() == null) {
+            Optional<Task> oldTaskOptional = taskStore.findById(task.getId());
+            if (oldTaskOptional.isEmpty()) {
+                return false;
+            }
+            task.setUser(oldTaskOptional.get().getUser());
+        }
         return taskStore.update(task);
     }
 

@@ -17,7 +17,7 @@ public interface TaskService {
 
     Collection<Task> findNew();
 
-    boolean update(Task task);
+    boolean update(Task task, User user);
 
     boolean getDone(int id);
 

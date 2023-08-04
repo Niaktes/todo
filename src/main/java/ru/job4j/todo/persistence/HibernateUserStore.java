@@ -41,4 +41,18 @@ public class HibernateUserStore implements UserStore {
         );
     }
 
+    /**
+     * Получить пользователя по ID.
+     * @param id ID пользователя
+     * @return Optional пользователя.
+     */
+    @Override
+    public Optional<User> findById(int id) {
+        return crudStore.optional(
+                "FROM User WHERE id = :uId",
+                User.class,
+                Map.of("uId", id)
+        );
+    }
+
 }

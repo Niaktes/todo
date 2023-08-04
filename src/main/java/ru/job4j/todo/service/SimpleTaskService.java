@@ -41,14 +41,8 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean update(Task task) {
-        if (task.getUser() == null) {
-            Optional<Task> oldTaskOptional = taskStore.findById(task.getId());
-            if (oldTaskOptional.isEmpty()) {
-                return false;
-            }
-            task.setUser(oldTaskOptional.get().getUser());
-        }
+    public boolean update(Task task, User user) {
+        task.setUser(user);
         return taskStore.update(task);
     }
 

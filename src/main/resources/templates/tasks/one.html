@@ -19,7 +19,6 @@
     <div class="container col-9" th:object="${task}">
       <div class="row mb-1">
         <span class="fs-5" th:text="*{name}"></span>
-        <span class="fs-6 text-secondary text-end" th:text="'Ответственный за выполнение: ' + *{user.name}"></span>
       </div>
       <div class="mb-3 row border border-secondary rounded" style="height: 290px;">
         <span style="white-space: pre;" class="fs-6" th:utext="*{description}"></span>

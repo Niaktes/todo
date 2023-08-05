@@ -22,9 +22,4 @@ public class SimpleUserService implements UserService {
         return userStore.findByLoginAndPassword(login, password);
     }
 
-    @Override
-    public Optional<User> findById(int id) {
-        return userStore.findById(id);
-    }
-
 }

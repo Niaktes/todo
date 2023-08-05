@@ -10,11 +10,11 @@ public interface TaskStore {
 
     Optional<Task> findById(int id);
 
-    Collection<Task> findAll();
+    Collection<Task> findAllByUserId(int id);
 
-    Collection<Task> findDone();
+    Collection<Task> findDoneByUserId(int id);
 
-    Collection<Task> findNew();
+    Collection<Task> findNewByUserId(int id);
 
     boolean update(Task task);
 

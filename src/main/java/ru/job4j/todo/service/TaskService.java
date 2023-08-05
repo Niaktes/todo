@@ -11,11 +11,11 @@ public interface TaskService {
 
     Optional<Task> findById(int id);
 
-    Collection<Task> findAll();
+    Collection<Task> findAllForUser(User user);
 
-    Collection<Task> findDone();
+    Collection<Task> findDoneForUser(User user);
 
-    Collection<Task> findNew();
+    Collection<Task> findNewForUser(User user);
 
     boolean update(Task task, User user);
 

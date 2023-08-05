@@ -36,34 +36,37 @@ public class HibernateTaskStore implements TaskStore {
     }
 
     /**
-     * Получить список всех задач из базы данных.
+     * Получить список всех задач конкретного пользователя.
+     * @param id ID пользователя.
      * @return список задач.
      */
     @Override
-    public Collection<Task> findAll() {
-        return crudStore.query("FROM Task", Task.class);
+    public Collection<Task> findAllByUserId(int id) {
+        return crudStore.query("FROM Task WHERE user_id = :uId", Task.class, Map.of("uId", id));
     }
 
     /**
-     * Получить выполненные задачи.
+     * Получить выполненные задачи конкретного пользователя.
+     * @param id ID пользователя.
      * @return список задач.
      */
     @Override
-    public Collection<Task> findDone() {
-        return crudStore.query("FROM Task WHERE done = true", Task.class);
+    public Collection<Task> findDoneByUserId(int id) {
+        return crudStore.query("FROM Task WHERE done = true AND user_id = :uId", Task.class, Map.of("uId", id));
     }
 
     /**
-     * Получить новые задачи не старше одной недели.
+     * Получить задачи не старше одной недели для конкретного пользователя.
+     * @param id ID пользователя
      * @return список задач.
      */
     @Override
-    public Collection<Task> findNew() {
+    public Collection<Task> findNewByUserId(int id) {
         LocalDate afterDate = LocalDate.now().minusWeeks(1);
         return crudStore.query(
-                "FROM Task WHERE created > :afterDate",
+                "FROM Task WHERE created > :afterDate AND user_id = :uId",
                 Task.class,
-                Map.of("afterDate", afterDate));
+                Map.of("afterDate", afterDate, "uId", id));
     }
 
     /**

@@ -19,7 +19,6 @@
     <div class="container col-9">
       <form th:action="@{/tasks/edit}" method="post" th:object="${task}">
         <input type="hidden" name="id" th:field="*{id}">
-        <input type="hidden" name="userId" th:value="*{user.id}">
         <div class="mb-3">
           <label for="name" class="form-label fs-6"><b>Название задачи</b></label>
           <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Название задачи"></input>

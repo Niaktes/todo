@@ -22,8 +22,9 @@ public class TaskController {
     private final UserService userService;
 
     @GetMapping("/all")
-    public String getAllTasks(Model model) {
-        Collection<Task> tasks = taskService.findAll().stream()
+    public String getAllTasks(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Collection<Task> tasks = taskService.findAllForUser(user).stream()
                 .sorted(Comparator.comparing(Task::getId))
                 .toList();
         model.addAttribute("tasks", tasks);
@@ -31,15 +32,17 @@ public class TaskController {
     }
 
     @GetMapping("/done")
-    public String getDoneTasks(Model model) {
-        Collection<Task> tasks = taskService.findDone();
+    public String getDoneTasks(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Collection<Task> tasks = taskService.findDoneForUser(user);
         model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
 
     @GetMapping("/new")
-    public String getNewTasks(Model model) {
-        Collection<Task> tasks = taskService.findNew();
+    public String getNewTasks(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Collection<Task> tasks = taskService.findNewForUser(user);
         model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
@@ -99,15 +102,9 @@ public class TaskController {
     }
 
     @PostMapping("/edit")
-    public String editTask(@ModelAttribute Task task,
-                           @RequestParam(name = "userId") int userId,
-                           Model model) {
-        Optional<User> userOptional = userService.findById(userId);
-        if (userOptional.isEmpty()) {
-            model.addAttribute("message", "Ошибка ответственного пользователя при обновлении задачи");
-            return "errors/404";
-        }
-        boolean isUpdated = taskService.update(task, userOptional.get());
+    public String editTask(@ModelAttribute Task task, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        boolean isUpdated = taskService.update(task, user);
         if (!isUpdated) {
             model.addAttribute("message", "Ошибка при обновлении задачи");
             return "errors/404";

@@ -26,18 +26,18 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public Collection<Task> findAll() {
-        return taskStore.findAll();
+    public Collection<Task> findAllForUser(User user) {
+        return taskStore.findAllByUserId(user.getId());
     }
 
     @Override
-    public Collection<Task> findDone() {
-        return taskStore.findDone();
+    public Collection<Task> findDoneForUser(User user) {
+        return taskStore.findDoneByUserId(user.getId());
     }
 
     @Override
-    public Collection<Task> findNew() {
-        return taskStore.findNew();
+    public Collection<Task> findNewForUser(User user) {
+        return taskStore.findNewByUserId(user.getId());
     }
 
     @Override

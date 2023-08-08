@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.TaskService;
-import ru.job4j.todo.service.UserService;
 
 @Controller
 @RequestMapping("/tasks")
@@ -19,7 +18,6 @@ import ru.job4j.todo.service.UserService;
 public class TaskController {
 
     private final TaskService taskService;
-    private final UserService userService;
 
     @GetMapping("/all")
     public String getAllTasks(Model model, HttpSession session) {
@@ -102,9 +100,12 @@ public class TaskController {
     }
 
     @PostMapping("/edit")
-    public String editTask(@ModelAttribute Task task, HttpSession session, Model model) {
+    public String editTask(@ModelAttribute Task task,
+                           @RequestParam(name = "priorityPosition") int priorityPosition,
+                           HttpSession session,
+                           Model model) {
         User user = (User) session.getAttribute("user");
-        boolean isUpdated = taskService.update(task, user);
+        boolean isUpdated = taskService.update(task, user, priorityPosition);
         if (!isUpdated) {
             model.addAttribute("message", "Ошибка при обновлении задачи");
             return "errors/404";

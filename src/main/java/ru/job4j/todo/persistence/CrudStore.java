@@ -45,6 +45,17 @@ public class CrudStore {
         return run(command);
     }
 
+    public <T> T getOne(String query, Class<T> cl, Map<String, Object> args) {
+        Function<Session, T> command = session -> {
+            var sessionQuery = session.createQuery(query, cl);
+            for (Map.Entry<String, Object> arg : args.entrySet()) {
+                sessionQuery.setParameter(arg.getKey(), arg.getValue());
+            }
+            return sessionQuery.uniqueResult();
+        };
+        return execute(command);
+    }
+
     public <T> Optional<T> optional(String query, Class<T> cl, Map<String, Object> args) {
         Function<Session, Optional<T>> command = session -> {
             var sessionQuery = session.createQuery(query, cl);

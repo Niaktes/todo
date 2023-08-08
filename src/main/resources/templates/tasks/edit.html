@@ -21,15 +21,26 @@
         <input type="hidden" name="id" th:field="*{id}">
         <div class="mb-3">
           <label for="name" class="form-label fs-6"><b>Название задачи</b></label>
-          <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Название задачи"></input>
+          <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Название задачи">
         </div>
         <div class="mb-3">
           <label for="description" class="form-label fs-6"><b>Описание задачи</b></label>
           <textarea class="form-control" id="description" name="description" rows="9" th:field="*{description}" placeholder="Описание задачи"></textarea>
         </div>
-        <div class="mb-3 col-3">
-          <label for="created" class="fs-6"><b>Создана:</b></label>
-          <input type="date" id="created" name="created" class="form-control" th:field="*{created}">
+        <div class="row">
+          <div class="mb-3 col-3">
+            <label for="created" class="fs-6"><b>Создана:</b></label>
+            <input type="date" id="created" name="created" class="form-control" th:field="*{created}">
+          </div>
+          <div class="col-6"></div>
+          <div class="mb-3 col-3">
+            <label for="priority"><b>Приоритет: </b></label>
+            <select class="form-control" id="priority" name="priorityPosition">
+              <option class="text-danger" th:value="1" th:text="Срочная" th:selected="${task.priority.position == 1}"></option>
+              <option class="text-primary" th:value="2" th:text="Обычная" th:selected="${task.priority.position == 2}"></option>
+              <option class="text-success" th:value="3" th:text="Второстепенная" th:selected="${task.priority.position == 3}"></option>
+            </select>
+          </div>
         </div>
         <div class="mb-3">
           <input type="checkbox" id="done" name="done" class="form-check-input" th:field="*{done}">

@@ -19,6 +19,12 @@
     <div class="container col-9" th:object="${task}">
       <div class="row mb-1">
         <span class="fs-5" th:text="*{name}"></span>
+        <div class="text-end">
+          Приоритет:
+          <span class="text-danger" th:if="${task.priority.position == 1}">Срочная!</span>
+          <span class="text-primary" th:if="${task.priority.position == 2}">Обычная</span>
+          <span class="text-success" th:if="${task.priority.position == 3}">Второстепенная</span>
+        </div>
       </div>
       <div class="mb-3 row border border-secondary rounded" style="height: 290px;">
         <span style="white-space: pre;" class="fs-6" th:utext="*{description}"></span>

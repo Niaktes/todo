@@ -13,10 +13,12 @@ import ru.job4j.todo.persistence.TaskStore;
 public class SimpleTaskService implements TaskService {
 
     private final TaskStore taskStore;
+    private final PriorityService priorityService;
 
     @Override
     public Task save(Task task, User user) {
         task.setUser(user);
+        task.setPriority(priorityService.findByPosition(2));
         return taskStore.save(task);
     }
 
@@ -41,8 +43,9 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean update(Task task, User user) {
+    public boolean update(Task task, User user, int priorityPosition) {
         task.setUser(user);
+        task.setPriority(priorityService.findByPosition(priorityPosition));
         return taskStore.update(task);
     }
 

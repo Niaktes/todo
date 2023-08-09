@@ -34,11 +34,11 @@
           </div>
           <div class="col-6"></div>
           <div class="mb-3 col-3">
-            <label for="priority"><b>Приоритет: </b></label>
-            <select class="form-control" id="priority" name="priorityPosition">
-              <option class="text-danger" th:value="1" th:text="Срочная" th:selected="${task.priority.position == 1}"></option>
-              <option class="text-primary" th:value="2" th:text="Обычная" th:selected="${task.priority.position == 2}"></option>
-              <option class="text-success" th:value="3" th:text="Второстепенная" th:selected="${task.priority.position == 3}"></option>
+            <label for="priority.id"><b>Приоритет: </b></label>
+            <select class="form-control" id="priority.id" name="priority.id">
+              <option class="text-danger" th:value="1" th:text="Срочная" th:selected="*{priority.position == 1}"></option>
+              <option class="text-primary" th:value="2" th:text="Обычная" th:selected="*{priority.position == 2}"></option>
+              <option class="text-success" th:value="3" th:text="Второстепенная" th:selected="*{priority.position == 3}"></option>
             </select>
           </div>
         </div>

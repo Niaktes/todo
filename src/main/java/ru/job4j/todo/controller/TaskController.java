@@ -101,11 +101,10 @@ public class TaskController {
 
     @PostMapping("/edit")
     public String editTask(@ModelAttribute Task task,
-                           @RequestParam(name = "priorityPosition") int priorityPosition,
                            HttpSession session,
                            Model model) {
         User user = (User) session.getAttribute("user");
-        boolean isUpdated = taskService.update(task, user, priorityPosition);
+        boolean isUpdated = taskService.update(task, user);
         if (!isUpdated) {
             model.addAttribute("message", "Ошибка при обновлении задачи");
             return "errors/404";

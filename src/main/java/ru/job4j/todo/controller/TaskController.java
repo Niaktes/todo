@@ -8,8 +8,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.PriorityService;
 import ru.job4j.todo.service.TaskService;
 
 @Controller
@@ -18,6 +20,7 @@ import ru.job4j.todo.service.TaskService;
 public class TaskController {
 
     private final TaskService taskService;
+    private final PriorityService priorityService;
 
     @GetMapping("/all")
     public String getAllTasks(Model model, HttpSession session) {
@@ -47,6 +50,8 @@ public class TaskController {
 
     @GetMapping("/create")
     public String getCreationPage(Model model) {
+        Collection<Priority> priorities = priorityService.findAll();
+        model.addAttribute("priorities", priorities);
         return "tasks/create";
     }
 
@@ -95,7 +100,9 @@ public class TaskController {
             model.addAttribute("message", "Задача с указанным Id не найдена.");
             return "errors/404";
         }
+        Collection<Priority> priorities = priorityService.findAll();
         model.addAttribute("task", taskOptional.get());
+        model.addAttribute("priorities", priorities);
         return "tasks/edit";
     }
 

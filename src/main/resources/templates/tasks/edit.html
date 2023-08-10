@@ -36,9 +36,7 @@
           <div class="mb-3 col-3">
             <label for="priority.id"><b>Приоритет: </b></label>
             <select class="form-control" id="priority.id" name="priority.id">
-              <option class="text-danger" th:value="1" th:text="Срочная" th:selected="*{priority.position == 1}"></option>
-              <option class="text-primary" th:value="2" th:text="Обычная" th:selected="*{priority.position == 2}"></option>
-              <option class="text-success" th:value="3" th:text="Второстепенная" th:selected="*{priority.position == 3}"></option>
+              <option th:each="priority : ${priorities}" th:value="${priority.id}" th:text="${priority.name}" th:selected="${priority.id == task.priority.id}"></option>
             </select>
           </div>
         </div>

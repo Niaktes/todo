@@ -26,6 +26,12 @@
           <label for="description" class="form-label fs-6"><b>Описание задачи</b></label>
           <textarea class="form-control" id="description" name="description" rows="9" placeholder="Надо сходить в магазин"></textarea>
         </div>
+        <div class="mb-3 col-3">
+          <label for="priority.id"><b>Приоритет: </b></label>
+          <select class="form-control" id="priority.id" name="priority.id">
+            <option th:each="priority : ${priorities}" th:value="${priority.id}" th:text="${priority.name}"></option>
+          </select>
+        </div>
         <div class="row">
           <div class="col-6 d-grid gap-2">
             <button class="btn btn-primary w-150" type="submit">Создать</button>
@@ -34,7 +40,6 @@
             <a class="btn btn-danger w-150" th:href="@{/tasks/all}">Отмена</a>
           </div>
         </div>
-        <input type="hidden" name="priority.id" th:value="2">
       </form>
       <footer th:insert="~{blocks/footer :: footer}"></footer>
     </div>

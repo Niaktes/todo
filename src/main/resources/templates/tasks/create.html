@@ -26,11 +26,20 @@
           <label for="description" class="form-label fs-6"><b>Описание задачи</b></label>
           <textarea class="form-control" id="description" name="description" rows="9" placeholder="Надо сходить в магазин"></textarea>
         </div>
-        <div class="mb-3 col-3">
-          <label for="priority.id"><b>Приоритет: </b></label>
-          <select class="form-control" id="priority.id" name="priority.id">
-            <option th:each="priority : ${priorities}" th:value="${priority.id}" th:text="${priority.name}"></option>
-          </select>
+        <div class="row">
+          <div class="mb-3 col-3">
+            <label for="priority.id"><b>Приоритет: </b></label>
+            <select class="form-control" id="priority.id" name="priority.id">
+              <option th:each="priority : ${priorities}" th:value="${priority.id}" th:text="${priority.name}"></option>
+            </select>
+          </div>
+          <div class="col-1"></div>
+          <div class="mb-3 col-4">
+            <label for="categoriesId"><b>Категории: </b></label>
+            <select class="form-select" multiple="multiple" size="5" id="categoriesId" name="categoriesId" required>
+              <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+          </div>
         </div>
         <div class="row">
           <div class="col-6 d-grid gap-2">

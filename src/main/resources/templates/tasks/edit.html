@@ -29,15 +29,22 @@
         </div>
         <div class="row">
           <div class="mb-3 col-3">
-            <label for="created" class="fs-6"><b>Создана:</b></label>
-            <input type="date" id="created" name="created" class="form-control" th:field="*{created}">
-          </div>
-          <div class="col-6"></div>
-          <div class="mb-3 col-3">
             <label for="priority.id"><b>Приоритет: </b></label>
             <select class="form-control" id="priority.id" name="priority.id">
               <option th:each="priority : ${priorities}" th:value="${priority.id}" th:text="${priority.name}" th:selected="${priority.id == task.priority.id}"></option>
             </select>
+          </div>
+          <div class="col-1"></div>
+          <div class="mb-3 col-4">
+            <label for="categoriesId"><b>Категории: </b></label>
+            <select class="form-select" multiple="multiple" size="5" id="categoriesId" name="categoriesId" required>
+              <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" th:selected="${#lists.contains(task.categories, category)}"></option>
+            </select>
+          </div>
+          <div class="col-1"></div>
+          <div class="mb-3 col-3">
+            <label for="created" class="fs-6"><b>Создана:</b></label>
+            <input type="date" id="created" name="created" class="form-control" th:field="*{created}">
           </div>
         </div>
         <div class="mb-3">

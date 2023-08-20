@@ -1,9 +1,11 @@
 package ru.job4j.todo.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.persistence.TaskStore;
@@ -15,8 +17,13 @@ public class SimpleTaskService implements TaskService {
     private final TaskStore taskStore;
 
     @Override
-    public Task save(Task task, User user) {
+    public Task save(Task task, User user, List<Integer> categoriesId) {
         task.setUser(user);
+        task.setCategories(categoriesId.stream().map(i -> {
+            Category category = new Category();
+            category.setId(i);
+            return category;
+        }).toList());
         return taskStore.save(task);
     }
 
@@ -41,8 +48,13 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean update(Task task, User user) {
+    public boolean update(Task task, User user, List<Integer> categoriesId) {
         task.setUser(user);
+        task.setCategories(categoriesId.stream().map(i -> {
+            Category category = new Category();
+            category.setId(i);
+            return category;
+        }).toList());
         return taskStore.update(task);
     }
 

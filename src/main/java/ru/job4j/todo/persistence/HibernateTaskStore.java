@@ -21,7 +21,7 @@ public class HibernateTaskStore implements TaskStore {
      */
     @Override
     public Task save(Task task) {
-        crudStore.run(session -> session.save(task));
+        crudStore.run(session -> session.persist(task));
         return task;
     }
 
@@ -84,7 +84,7 @@ public class HibernateTaskStore implements TaskStore {
      */
     @Override
     public boolean update(Task task) {
-        return crudStore.run(session -> session.update(task));
+        return crudStore.run(session -> session.merge(task));
     }
 
     /**

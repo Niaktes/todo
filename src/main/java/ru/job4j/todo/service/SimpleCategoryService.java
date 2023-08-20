@@ -10,7 +10,7 @@ import ru.job4j.todo.persistence.CategoryStore;
 @AllArgsConstructor
 public class SimpleCategoryService implements CategoryService {
 
-    CategoryStore categoryStore;
+    private final CategoryStore categoryStore;
 
     @Override
     public Collection<Category> findAll() {

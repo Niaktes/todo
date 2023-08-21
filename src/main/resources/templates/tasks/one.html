@@ -30,7 +30,7 @@
         <span style="white-space: pre;" class="fs-6" th:utext="*{description}"></span>
       </div>
       <div class="row mb-3">
-        <span class="fs-6 text-end" th:text="*{created}"></span>
+        <span class="fs-6 text-end" th:text="*{getCreatedWithTimezone()}"></span>
       </div>
       <div class="row">
         <div class="col-2 d-grid gap-2" th:each="category : *{categories}">

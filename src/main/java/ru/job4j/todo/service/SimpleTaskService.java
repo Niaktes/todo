@@ -1,8 +1,11 @@
 package ru.job4j.todo.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,6 +59,12 @@ public class SimpleTaskService implements TaskService {
             category.setId(i);
             return category;
         }).collect(Collectors.toSet()));
+        LocalDateTime createdInTimezone = task.getCreated();
+        String userTimezone = user.getTimezone() != null
+                ? user.getTimezone() : TimeZone.getDefault().getID();
+        task.setCreated(createdInTimezone.atZone(ZoneId.of(userTimezone))
+                        .withZoneSameInstant(ZoneId.systemDefault())
+                        .toLocalDateTime());
         return taskStore.update(task);
     }
 

@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class TimeZoneUtil {
 
-    private TimeZoneUtil(){ }
+    private TimeZoneUtil() { }
 
     public static Map<String, String> getTimezonePairs() {
         return getAvailableTimezones().stream()

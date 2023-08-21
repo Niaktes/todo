@@ -1,14 +1,14 @@
 package ru.job4j.todo.service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
 
 public interface TaskService {
 
-    Task save(Task task, User user, List<Integer> categoriesId);
+    Task save(Task task, User user, Set<Integer> categoriesId);
 
     Optional<Task> findById(int id);
 
@@ -18,7 +18,7 @@ public interface TaskService {
 
     Collection<Task> findNewForUser(User user);
 
-    boolean update(Task task, User user, List<Integer> categoriesId);
+    boolean update(Task task, User user, Set<Integer> categoriesId);
 
     boolean getDone(int id);
 

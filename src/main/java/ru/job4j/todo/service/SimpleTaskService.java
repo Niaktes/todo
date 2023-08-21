@@ -1,8 +1,9 @@
 package ru.job4j.todo.service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Category;
@@ -17,13 +18,13 @@ public class SimpleTaskService implements TaskService {
     private final TaskStore taskStore;
 
     @Override
-    public Task save(Task task, User user, List<Integer> categoriesId) {
+    public Task save(Task task, User user, Set<Integer> categoriesId) {
         task.setUser(user);
         task.setCategories(categoriesId.stream().map(i -> {
             Category category = new Category();
             category.setId(i);
             return category;
-        }).toList());
+        }).collect(Collectors.toSet()));
         return taskStore.save(task);
     }
 
@@ -48,13 +49,13 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean update(Task task, User user, List<Integer> categoriesId) {
+    public boolean update(Task task, User user, Set<Integer> categoriesId) {
         task.setUser(user);
         task.setCategories(categoriesId.stream().map(i -> {
             Category category = new Category();
             category.setId(i);
             return category;
-        }).toList());
+        }).collect(Collectors.toSet()));
         return taskStore.update(task);
     }
 

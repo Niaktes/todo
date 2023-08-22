@@ -35,7 +35,7 @@
               <span class="text-primary" th:if="${task.priority.position == 2}" th:text="${task.name}"></span>
               <span class="text-success" th:if="${task.priority.position == 3}" th:text="${task.name}"></span>
             </td>
-            <td class="text-center" th:text="${task.getCreatedWithTimezone()}"/>
+            <td class="text-center" th:text="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}"/>
             <td class="text-center">
               <span th:if="${task.done}">
                 <i class="bi bi-check2-circle"></i>

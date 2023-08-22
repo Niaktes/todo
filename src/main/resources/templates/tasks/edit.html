@@ -44,7 +44,7 @@
           <div class="col-1"></div>
           <div class="mb-3 col-3">
             <label for="created" class="fs-6"><b>Создана:</b></label>
-            <input type="datetime" id="created" name="created" class="form-control" th:field="*{created}">
+            <input type="datetime" id="created" name="created" class="form-control" th:value="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}">
           </div>
         </div>
         <div class="mb-3">

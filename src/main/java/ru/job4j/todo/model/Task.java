@@ -1,11 +1,8 @@
 package ru.job4j.todo.model;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TimeZone;
 import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,17 +40,9 @@ public class Task {
     )
     private Set<Category> categories = new HashSet<>();
 
-    @DateTimeFormat(pattern = "HH:mm yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime created = LocalDateTime.now();
 
     private boolean done;
-
-    public String getCreatedWithTimezone() {
-        String userTimezone = user.getTimezone() != null
-                ? user.getTimezone() : TimeZone.getDefault().getID();
-        return created.atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of(userTimezone))
-                .format(DateTimeFormatter.ofPattern("HH:mm yyyy-MM-dd"));
-    }
 
 }
